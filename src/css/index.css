@@ -1,0 +1,19 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* ✅ 스크롤 제거 */
+
+  /* background-image: url('/public/img/임시배경.jpg');
+  background-repeat: no-repeat;
+  background-size: cover; */
+   /* background-position: center; /* 중앙 정렬 */
+  /*  background-attachment: fixed; /* 스크롤 시 배경 고정 (옵션) */
+
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none
+  
+}

@@ -1,0 +1,108 @@
+p { 
+    margin: 0px 0px 0px 0px;
+    color: #fff; 
+    /* line-height: 120%;  */
+    size: 100%;
+    white-space: nowrap; /* 줄바꿈 방지 */
+    overflow: hidden; /* 부모 영역 초과 시 숨김 */
+    text-overflow: ellipsis; /* 너무 길면 '...' 표시 */
+    max-width: 100%; /* 부모 요소를 넘지 않도록 제한 */
+    
+    font-size: 1.5vh !important;
+}
+
+.header {
+    width: 100vw;
+    height: 12.5vh;
+    background-color: blue;
+}
+
+
+.main {
+    width: 100vw;
+    height: 75vh;
+    background-color: red;
+    display: flex;
+}
+
+.three {
+    width: 30%;
+    height: 100%;
+    background-color: grey;
+}
+
+.sensor-list {
+    width: 70%;
+    height: 100%;
+    background-color: purple;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.scrollbar-widget {
+    width: 90%;
+    height: 95%;
+    /* background-color: aqua; */
+    overflow: auto;
+    
+    display: flex;
+    flex-wrap: wrap; 
+    
+    justify-content: center;
+    align-items: center;
+}
+
+.scrollbar-widget::-webkit-scrollbar {
+    width: 10px;
+  }
+.scrollbar-widget::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+}
+.scrollbar-widget::-webkit-scrollbar-track {
+    background-color: grey;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
+}
+
+.part-card {
+    width: 22%;
+    height: 35%;
+    border-radius: 25px;
+    border: 1px solid rgb(0, 0, 0);
+    box-shadow: 5px 5px 20px;
+    transition: all 0.5s;
+    margin: 0.7%;
+    background-color: aliceblue;
+    overflow:hidden;
+  }
+.part-card:hover {
+    width: 23%;
+    height: 36%;
+}
+
+.part-img {
+    width: 40%;
+    height: 40%;
+    background-color: brown;
+    margin-top: 5%;
+    margin-left: 50%;
+}
+
+.part-info {
+    height: 50%;
+    background-color: pink;
+    margin-left: 10% !important;
+    margin-right: 10% !important;
+    margin-top: 1% !important;
+}
+  
+
+.footer {
+    width: 100vw;
+    height: 12.5vh;
+    background-color: yellow;
+}

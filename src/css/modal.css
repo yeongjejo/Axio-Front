@@ -1,0 +1,85 @@
+.modal-open-btn {
+    width: fit-content;
+    font-size: 1.5vw;
+    color: white;
+    font-weight: bold;
+    background-color: rgb(196, 106, 151);
+    cursor : pointer;
+}
+
+.modal-open-btn:hover {
+    width: fit-content;
+    font-size: 1.5vw; 
+    color:grey;
+    font-weight: bold;
+}
+
+
+.modal-container {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+
+.modal-content {
+    width: 40% !important;
+    height: 40% !important;
+    padding: 3% !important;;
+    background-color: black !important;  /* 🟢 모달 내부 배경색 (화이트) */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+.modal-input-group {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    float: right;
+    /* background-color: aqua; */
+}
+
+
+.modal-input {
+    width: 100%;
+}
+
+
+.modal-btn-group {
+    width: 30%;
+    height: 15%;
+    display: flex;
+    float: right;
+    margin-top: 2%;
+}
+
+
+.modal-btn {
+    width: 100%;
+    font-size: 1vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: black; 
+    border: 1px solid white;
+    border-radius: 10px;
+
+}
+
+.modal-btn:hover {
+    color: black;
+    background-color: white; 
+}
+
+.space {
+    width: 10%;
+}
+
