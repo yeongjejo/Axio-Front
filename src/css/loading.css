@@ -3,155 +3,111 @@
     padding: 0;
     width: 100vw;
     height: 100vh;
-    /* background-image: url('/img/임시배경.jpg');
+    background-image: url('/img/배경.svg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    background-attachment: fixed; */
+    background-attachment: fixed;
     
-   display: flex;
+   /* display: flex; */
     
     /* background-color: aqua; */
 }
 
-a {
-    text-decoration: none;
+
+/* 위 라인*/
+.top {
+  width: 100vw;
+  height: 60vh;
+  background-color: blue;
+  display: flex;
+  justify-content: center; /* 자식 요소를 가로(수평) 기준으로 가운데 정렬시킴 */
+  align-items:end ; /* 자식 요소를 세로(수직) 기준으로 가운데 정렬시킴 */
 }
 
-a:visited {
-  color : white;
+.logo {
+  margin: 0;
+  padding: 0;
+  width: 15vw;
+  height: 15vh;
+
+  background-color: pink;
+  background-image: url('/img/axio_logo.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
-.point {
-    background-image: radial-gradient(#fff 10%, transparent 0);
-    background-position: 0 0, 10px 10px;
-    background-size: 15px 15px;
-  }
 
-
-/* 왼쪽 라인 */
-  #left {
-    width: 10vw;
-    background-color: brown;
-  }
-
-  #left_point {
-    width: 100%;
-    height: 20%;
-    background-color: hotpink;
-  }
-
-
-  
   
 /* 중간 라인 */
-  #middle {
-    padding-top: 65vh;
-    width: 60vw;
-    
-    background-color: chartreuse;
-  }
+#middle {
+  width: 100vw;
+  height: 25vh;
+  background-color: green;
+  text-align: center;
+  display: flex;
+  flex-direction: column;  /* ✅ 세로 방향으로 정렬 */
+  justify-content: end; /* ✅ 세로 중앙 정렬 */
+}
 
 
-  #title {
-    margin: 0; /* 불필요한 여백 제거 */
-    background-color: red;
-  }
+.title {
+  font-size: 2.5vw; /* 반응형 폰트 */
+  color: red;
+}
 
-  .title {
-    font-size: 2.5vw; /* 반응형 폰트 */
-    color: white;
-    font-weight: bold;
-  }
-  
+.content {
+  display: block;  /* ✅ 블록 요소로 설정 */
+  font-size: 1.5vw; /* 반응형 폰트 */
+  color: white;
+  font-weight: bold;
+}
 
-  #content {
-    padding-top: 2%; 
-    background-color: blue;
-  }
-
-  .content {
-    font-size: 1.5vw; /* 반응형 폰트 */
-    color: white;
-    font-weight: bold;
-  }
-
-
-  #Follow {
-    padding-top: 10vh; 
-    background-color: purple;
-  }
-
-  .Follow {
-    font-size: 1.5vw; /* 반응형 폰트 */
-    color: white;
-    font-weight: bold;
-  }
-
-  .spacing {
-    margin-left: 1vw; /* 원하는 만큼 여백 조정 */
+/* 원하는 만큼 여백 조정 */
+  /* .spacing {
+    margin-left: 1vw; 
     margin-right: 1vw;
-  }
+  } */
 
-/* 오른쪽 라인 */
-#right {
-    width: 30vw;
-    padding-top: 70vh;
-    background-color: cornflowerblue;
+
+
+/* 맨아래 라인 */
+.bottom {
+    width: 100vw;
+    height: 15vh;
+    background-color: aqua;
+    display: flex;
+    align-items : center;
+    justify-content: space-between;
+}
+
+.version {
+  width: 7%;
+  height: 30%;
+  font-size: 1.2vw;
+  font-weight: 500;
+  color: white;
+  text-align: center;
+
+  margin-left: 5%;
+
+  display : flex;
+  justify-content : center;
+  align-items : center;
+  
+  background-color: #6B4EFF;
+
+  border-radius: 15px;
 }
 
 .serialkey {
-    font-size: 1.5vw;
-    color: white;
-    font-weight: bold;
     background-color: rgb(196, 106, 151);
+    height: 30%;
+
+    margin-right: 5%;
+    
+    display : flex;
+    justify-content : center;
+    align-items : center;
 }
-/* 
-.serialkey:hover {
-    width: fit-content;
-    font-size: 1.5vw; 
-    color:grey;
-    font-weight: bold;
-} */
-
-
-  #right_point {
-    margin-top: 3vh;
-    width: 100%;
-    height: 100%;
-    background-color: darkgreen;
-  }
-
-
-
-  /* 모달창 */
-
-  .btn-wrapper {
-    display: flex;
-    justify-content: center;
-    margin-top: 5rem;
-  }
-  
-  .modal-open-button, .modal-close-btn {
-    cursor: pointer;
-    margin-left: auto;
-  }
-  
-  .modal-container {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.5);
-  }
-  
-  .modal-content {
-    background-color: #ffffff;
-    width: 250px;
-    height: 150px;
-    padding: 15px;
-  }

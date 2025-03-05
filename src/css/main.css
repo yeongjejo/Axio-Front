@@ -8,19 +8,12 @@ p {
     text-overflow: ellipsis; /* 너무 길면 '...' 표시 */
     max-width: 100%; /* 부모 요소를 넘지 않도록 제한 */
     
-    font-size: 1.5vh !important;
+    font-size: 1.3vh !important;
 }
-
-.header {
-    width: 100vw;
-    height: 12.5vh;
-    background-color: blue;
-}
-
 
 .main {
     width: 100vw;
-    height: 75vh;
+    height: 80vh;
     background-color: red;
     display: flex;
 }
@@ -28,8 +21,21 @@ p {
 .three {
     width: 30%;
     height: 100%;
-    background-color: grey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: green;
 }
+
+.three-postion {
+    width: 90%;
+    height: 95%;
+    background-color: grey;
+    
+    overflow: auto;
+    border-radius: 25px;
+}
+
 
 .sensor-list {
     width: 70%;
@@ -43,13 +49,13 @@ p {
 .scrollbar-widget {
     width: 90%;
     height: 95%;
-    /* background-color: aqua; */
+    background-color: aqua;
     overflow: auto;
     
     display: flex;
     flex-wrap: wrap; 
     
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
 }
 
@@ -103,6 +109,6 @@ p {
 
 .footer {
     width: 100vw;
-    height: 12.5vh;
+    height: 20vh;
     background-color: yellow;
 }

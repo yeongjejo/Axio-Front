@@ -4,6 +4,11 @@ html, body {
   width: 100vw;
   height: 100vh;
   overflow: hidden; /* ✅ 스크롤 제거 */
+  font-family: 'Inter';
+
+  
+  font: 'Inter';
+  font-weight: 800;
 
   /* background-image: url('/public/img/임시배경.jpg');
   background-repeat: no-repeat;
