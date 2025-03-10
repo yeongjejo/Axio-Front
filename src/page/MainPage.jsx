@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import '/src/css/main.css'
 import { useFrame } from '@react-three/fiber';
 import Skeleton from '../component/Skeleton';
+import SkeletonFK from '../component/SkeletonFK';
 
 
 function MainPage() {
@@ -25,7 +26,7 @@ function MainPage() {
         <div className="main">
           <div className='three'>
             <div className='three-postion'>
-              <Skeleton />
+              <SkeletonFK />
             </div>
           </div>
           <div className='sensor-list'>
