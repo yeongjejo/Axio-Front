@@ -11,9 +11,16 @@ p {
     font-size: 1.3vh !important;
 }
 
+.header {
+    width: 100vw;
+    height: 10vh;
+    background-color: black;
+    display: flex;
+}
+
 .main {
     width: 100vw;
-    height: 80vh;
+    height: 75vh;
     background-color: red;
     display: flex;
 }
@@ -109,6 +116,6 @@ p {
 
 .footer {
     width: 100vw;
-    height: 20vh;
+    height: 15vh;
     background-color: yellow;
 }

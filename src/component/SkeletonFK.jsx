@@ -1,9 +1,65 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Mask, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import { useControls } from "leva";
 import { rand } from "three/tsl";
+
+
+// 관절 사이를 연결하는 막대 생성 함수
+// const Stick = ({ start, end }) => {
+//     const direction = end.clone().sub(start).normalize();
+//     const length = start.distanceTo(end);
+//     const midPoint = start.clone().lerp(end, 0.5);
+
+
+//     // 방향에 따라 쿼터니언 계산
+//     const up = new THREE.Vector3(0, 1, 0); // 월드 좌표계에서의 위쪽 방향
+//     const quaternion = new THREE.Quaternion().setFromUnitVectors(up, direction); // 쿼터니언 계산
+    
+
+//     return (
+//         <mesh position={midPoint} quaternion={quaternion.normalize()}>
+//             <cylinderGeometry args={[0.1, 0.1, length, 16]} />
+//             <meshStandardMaterial color="#ff0000" />
+//         </mesh>
+//     );
+// };
+
+// 🦴 Stick: 관절 사이를 연결하는 막대
+const Stick = ({ parentRef, childRef }) => {
+    const ref = useRef();
+
+    useFrame(() => {
+        if (parentRef.current && childRef.current) {
+            const parentPos = new THREE.Vector3();
+            parentRef.current.getWorldPosition(parentPos);
+
+            const childPos = new THREE.Vector3();
+            childRef.current.getWorldPosition(childPos);
+
+            // 위치 업데이트
+            const direction = childPos.clone().sub(parentPos).normalize();
+            const length = parentPos.distanceTo(childPos);
+            const midPoint = parentPos.clone().lerp(childPos, 0.5);
+            const up = new THREE.Vector3(0, 1, 0);
+            const quaternion = new THREE.Quaternion().setFromUnitVectors(up, direction);
+
+            if (ref.current) {
+                ref.current.position.copy(midPoint);
+                ref.current.quaternion.copy(quaternion);
+                ref.current.scale.set(1, length, 1);
+            }
+        }
+    });
+
+    return (
+        <mesh ref={ref}>
+            <cylinderGeometry args={[0.1, 0.1, 1, 16]} />
+            <meshStandardMaterial color="#000000" />
+        </mesh>
+    );
+};
 
 
 
@@ -44,61 +100,41 @@ function SkeletonModel() {
     const leftLowerLegRef = useRef();
     const leftFootRef = useRef();
 
+    const boneRefList = [
+        [hipsRef, [waistRef, rightUpperLegRef, leftUpperLegRef]],
+        [waistRef, [backRef]],
+        [backRef, [neckRef]],
+        [neckRef, [headRef, rightShoulderRef, leftShoulderRef]],
+
+        [rightShoulderRef, [rightUpperArmRef]],
+        [rightUpperArmRef, [rightLowerArmRef]],
+        [rightLowerArmRef, [rightHandRef]],
+
+        [leftShoulderRef, [leftUpperArmRef]],
+        [leftUpperArmRef, [leftLowerArmRef]],
+        [leftLowerArmRef, [leftHandRef]],
+        
+        [rightUpperLegRef, [rightLowerLegRef]],
+        [rightLowerLegRef, [rightFootRef]],
+
+        [leftUpperLegRef, [leftLowerLegRef]],
+        [leftLowerLegRef, [leftFootRef]],
+    ]
+
+
     var check = 0
 
     useFrame((state, delta) => {
-        if(check % 30 == 1) {
-            // rightUpperLegRef.current.rotation.x = Math.floor(Math.random() * 361)
-            // rightUpperLegRef.current.rotation.y = Math.floor(Math.random() * 361)
-            // rightUpperLegRef.current.rotation.z = Math.floor(Math.random() * 361)
-
-            // rightLowerLegRef.current.rotation.x = Math.floor(Math.random() * 361)
-            // rightLowerLegRef.current.rotation.y = Math.floor(Math.random() * 361)
-            // rightLowerLegRef.current.rotation.z = Math.floor(Math.random() * 361)
-
-            // rightFootRef.current.rotation.x = Math.floor(Math.random() * 361)
-            // rightFootRef.current.rotation.y = Math.floor(Math.random() * 361)
-            // rightFootRef.current.rotation.z = Math.floor(Math.random() * 361)
-
-             // 랜덤한 축 벡터 (정규화)
-            const randomAxis1 = new THREE.Vector3(Math.random(), Math.random(), Math.random()).normalize();
-            const randomAxis2 = new THREE.Vector3(Math.random(), Math.random(), Math.random()).normalize();
-            const randomAxis3 = new THREE.Vector3(Math.random(), Math.random(), Math.random()).normalize();
-            
-            // 랜덤한 회전 각도 (0 ~ π 범위)
-            const randomAngle1 = Math.random() * Math.PI;
-            const randomAngle2 = Math.random() * Math.PI;
-            const randomAngle3 = Math.random() * Math.PI;
-
-            const randomRotation1 = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI / 2);
-            const randomRotation2 = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI / 2);
-            const randomRotation3 = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI / 2);
-
-            rightUpperLegRef.current.quaternion.multiply(randomRotation1);
-            // rightLowerLegRef.current.quaternion.multiply(randomRotation2);
-            // rightFootRef.current.quaternion.multiply(randomRotation3);
-
-
-
-            let pos1 = new THREE.Vector3();
-            rightUpperLegRef.current.getWorldPosition(pos1)
-
-            let pos2 = new THREE.Vector3();
-            rightLowerLegRef.current.getWorldPosition(pos2)
-
-            console.log(pos1.distanceTo(pos2))
-            
-            pos1 = new THREE.Vector3();
-            rightLowerLegRef.current.getWorldPosition(pos1)
-
-            pos2 = new THREE.Vector3();
-            rightFootRef.current.getWorldPosition(pos2)
-            
-            console.log(pos1.distanceTo(pos2))
-            console.log('--------------------')
+        // console.log(refsReady)
+        
+        if(check % 10 == 1) {
+            rightUpperLegRef.current.quaternion.copy(new THREE.Quaternion().random().normalize())
+            rightLowerLegRef.current.quaternion.copy(new THREE.Quaternion().random().normalize())
+            rightFootRef.current.quaternion.copy(new THREE.Quaternion().random().normalize())
 
         }
-        // check = 1
+        
+        check += 1
     })
 
 
@@ -127,24 +163,6 @@ function SkeletonModel() {
         setBoneWorldPosition(hipsRef, leftUpperLegRef, new THREE.Vector3(2, 10, 0))
         setBoneWorldPosition(leftUpperLegRef, leftLowerLegRef, new THREE.Vector3(2, 5, 0))
         setBoneWorldPosition(leftLowerLegRef, leftFootRef, new THREE.Vector3(2, 0, 0))
-
-        console.log(rightUpperLegRef.current.quaternion)
-
-        const randomAxis1 = new THREE.Vector3(Math.random(), Math.random(), Math.random()).normalize();
-        const randomAxis2 = new THREE.Vector3(Math.random(), Math.random(), Math.random()).normalize();
-        const randomAxis3 = new THREE.Vector3(Math.random(), Math.random(), Math.random()).normalize();
-        
-        // 랜덤한 회전 각도 (0 ~ π 범위)
-        const randomAngle1 = Math.random() * Math.PI;
-        const randomAngle2 = Math.random() * Math.PI;
-        const randomAngle3 = Math.random() * Math.PI;
-
-        const randomRotation1 = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI / 2);
-        const randomRotation2 = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI / 2);
-        const randomRotation3 = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI / 2);
-
-        rightUpperLegRef.current.quaternion.multiply(randomRotation1);
-        rightLowerLegRef.current.quaternion.multiply(randomRotation1);
 
     }, []);
 
@@ -245,7 +263,7 @@ function SkeletonModel() {
                 </mesh>   
 
                 {/* Right Upper Leg */}
-                <mesh ref={rightUpperLegRef}  scale={3.3}  >
+                <mesh ref={rightUpperLegRef}  >
                     <sphereGeometry  />
                     <meshStandardMaterial color="yellow" />
                     <axesHelper scale={3} />
@@ -264,7 +282,7 @@ function SkeletonModel() {
                 </mesh>   
 
                 {/* Left Upper Leg */}
-                <mesh ref={leftUpperLegRef} >
+                <mesh ref={leftUpperLegRef}>
                     <sphereGeometry  />
                     <meshStandardMaterial color="yellow" />
                     <axesHelper scale={3} />
@@ -285,8 +303,42 @@ function SkeletonModel() {
 
             </mesh>   
 
-        
-            
+            {/* 🔹 useEffect 이후 실행 */}
+            {/* {      
+                refsReady &&
+                    boneRefList.map(([parent, childList], index) => {
+
+                        console.log(1)
+                        let parentPosition = new THREE.Vector3();
+                        parent.current.getWorldPosition(parentPosition);
+
+                        return childList.map((child, i) => {
+                            if (!child.current) return null;
+
+                            let childPosition = new THREE.Vector3();
+                            child.current.getWorldPosition(childPosition);
+
+                            return (
+                                <Stick
+                                    key={`stick-${index}-${i}`}
+                                    start={parentPosition}
+                                    end={childPosition}
+                                />
+                            );
+                        });
+                    })
+            } */}
+             {/* Stick 동적 업데이트 */}
+             {
+             boneRefList.map(([parent, childList], index) => {
+                console.log(1)
+                return childList.map((child, i) => (
+                    <Stick key={`stick-${index}-${i}`} parentRef={parent} childRef={child} />
+                ))
+             }
+                
+            )}
+
         </>
 
     );

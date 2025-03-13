@@ -23,6 +23,9 @@ function MainPage() {
 
   return (
       <>
+        <div className='header'>
+
+        </div>
         <div className="main">
           <div className='three'>
             <div className='three-postion'>
@@ -31,18 +34,6 @@ function MainPage() {
           </div>
           <div className='sensor-list'>
             <div className='scrollbar-widget'>
-              {/* <section className="part-card">
-                <div className='part-img'>
-
-                </div>
-                <div className='part-info'>
-                  <p>펌웨어 버전 : v1.0.0</p>
-                  <p>타입 : v1.0.0</p>
-                  <p>착용 상태 : v1.0.0</p>
-                  <p>보정상태 : v1.0.0</p>
-                  <p>온도: v1.0.0</p>
-                </div>
-              </section>
               <section className="part-card">
                 <div className='part-img'>
 
@@ -174,7 +165,19 @@ function MainPage() {
                   <p>보정상태 : v1.0.0</p>
                   <p>온도: v1.0.0</p>
                 </div>
-              </section> */}
+              </section>
+              <section className="part-card">
+                <div className='part-img'>
+
+                </div>
+                <div className='part-info'>
+                  <p>펌웨어 버전 : v1.0.0</p>
+                  <p>타입 : v1.0.0</p>
+                  <p>착용 상태 : v1.0.0</p>
+                  <p>보정상태 : v1.0.0</p>
+                  <p>온도: v1.0.0</p>
+                </div>
+              </section>
               
               {/* ✅ 데이터 배열 크기만큼 동적으로 생성 */}
               {/* {sensorData.map((sensor, index) => (
