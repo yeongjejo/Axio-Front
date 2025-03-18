@@ -6,25 +6,7 @@ import { useControls } from "leva";
 import { rand } from "three/tsl";
 
 
-// 관절 사이를 연결하는 막대 생성 함수
-// const Stick = ({ start, end }) => {
-//     const direction = end.clone().sub(start).normalize();
-//     const length = start.distanceTo(end);
-//     const midPoint = start.clone().lerp(end, 0.5);
 
-
-//     // 방향에 따라 쿼터니언 계산
-//     const up = new THREE.Vector3(0, 1, 0); // 월드 좌표계에서의 위쪽 방향
-//     const quaternion = new THREE.Quaternion().setFromUnitVectors(up, direction); // 쿼터니언 계산
-    
-
-//     return (
-//         <mesh position={midPoint} quaternion={quaternion.normalize()}>
-//             <cylinderGeometry args={[0.1, 0.1, length, 16]} />
-//             <meshStandardMaterial color="#ff0000" />
-//         </mesh>
-//     );
-// };
 
 // 🦴 Stick: 관절 사이를 연결하는 막대
 const Stick = ({ parentRef, childRef }) => {
@@ -56,7 +38,7 @@ const Stick = ({ parentRef, childRef }) => {
     return (
         <mesh ref={ref}>
             <cylinderGeometry args={[0.1, 0.1, 1, 16]} />
-            <meshStandardMaterial color="#000000" />
+            <meshStandardMaterial color="black" />
         </mesh>
     );
 };
@@ -74,8 +56,9 @@ function setBoneWorldPosition(parent, child, position) {
 
 
 // 🦴 **스켈레톤 모델 컴포넌트**
-function SkeletonModel() {
-
+function SkeletonModel({sensorID}) {
+    const [beforSelectedSensor, setBeforSelectedSensor] = useState('hips');
+//     console.log("---------______________")
     const hipsRef = useRef();
     const waistRef = useRef();
     const backRef = useRef();
@@ -122,15 +105,69 @@ function SkeletonModel() {
     ]
 
 
+
+
+    // 컬러 변경
+    const boneColorState = new Map();
+
+    const [hipsColor, setHipsColor] = useState("darkslateblue");
+    const [waistColor, setWaistColor] = useState("darkslateblue");
+    const [backColor, setBackColor] = useState("darkslateblue");
+    const [neckColor, setNeckColor] = useState("darkslateblue");
+    const [headColor, setHeadColor] = useState("darkslateblue");
+
+    const [rightShoulderColor, setRightShoulderColor] = useState("darkslateblue");
+    const [rightUpperArmColor, setRightUpperArmColor] = useState("darkslateblue");
+    const [rightLowerArmColor, setRightLowerArmColor] = useState("darkslateblue");
+    const [rightHandColor, setRightHandColor] = useState("darkslateblue");
+    
+    const [leftShoulderColor, setLeftShoulderColor] = useState("darkslateblue");
+    const [leftUpperArmColor, setLeftUpperArmColor] = useState("darkslateblue");
+    const [leftLowerArmColor, setLeftLowerArmColor] = useState("darkslateblue");
+    const [leftHandColor, setLeftHandColor] = useState("darkslateblue");
+
+    const [rightUpperLegColor, setRightUpperLegColor] = useState("darkslateblue");
+    const [rightLowerLegColor, setRightLowerLegColor] = useState("darkslateblue");
+    const [rightFootColor, setRightFootsColor] = useState("darkslateblue");
+
+    const [leftUpperLegColor, setLeftUpperLegColor] = useState("darkslateblue");
+    const [leftLowerLegColor, setLeftLowerLegColor] = useState("darkslateblue");
+    const [leftFootColor, setLeftFootColor] = useState("darkslateblue");
+
+    boneColorState.set('hips', setHipsColor)
+    boneColorState.set('waist', setWaistColor)
+    boneColorState.set('back', setBackColor)
+    boneColorState.set('neck', setNeckColor)
+    boneColorState.set('head', setHeadColor)
+
+    boneColorState.set('rightShoulder', setRightShoulderColor)
+    boneColorState.set('rightUpperArm', setRightUpperArmColor)
+    boneColorState.set('rightLowerArm', setRightLowerArmColor)
+    boneColorState.set('rightHand', setRightHandColor)
+
+    boneColorState.set('leftShoulder', setLeftShoulderColor)
+    boneColorState.set('leftUpperArm', setLeftUpperArmColor)
+    boneColorState.set('leftLowerArm', setLeftLowerArmColor)
+    boneColorState.set('leftHand', setLeftHandColor)
+
+    boneColorState.set('rightUpperLeg', setRightUpperLegColor)
+    boneColorState.set('rightLowerLeg', setRightLowerLegColor)
+    boneColorState.set('rightFoot', setRightFootsColor)
+    
+    boneColorState.set('leftUpperLeg', setLeftUpperLegColor)
+    boneColorState.set('leftLowerLeg', setLeftLowerLegColor)
+    boneColorState.set('leftFoot', setLeftFootColor)
+    
+
     var check = 0
 
     useFrame((state, delta) => {
         // console.log(refsReady)
         
         if(check % 10 == 1) {
-            rightUpperLegRef.current.quaternion.copy(new THREE.Quaternion().random().normalize())
-            rightLowerLegRef.current.quaternion.copy(new THREE.Quaternion().random().normalize())
-            rightFootRef.current.quaternion.copy(new THREE.Quaternion().random().normalize())
+            // rightUpperLegRef.current.quaternion.copy(new THREE.Quaternion().random().normalize())
+            // rightLowerLegRef.current.quaternion.copy(new THREE.Quaternion().random().normalize())
+            // rightFootRef.current.quaternion.copy(new THREE.Quaternion().random().normalize())
 
         }
         
@@ -167,61 +204,72 @@ function SkeletonModel() {
     }, []);
 
 
+    useEffect(() => {
+        // console.log(sensorID)
+        if (boneColorState.has(sensorID)) {
+            boneColorState.get(sensorID)("red")
+            boneColorState.get(beforSelectedSensor)("darkslateblue")
+            setBeforSelectedSensor(sensorID)
+        }
+
+    }, [sensorID]);
+
+
     return (
         <>
             {/* Hips */}
             <mesh ref={hipsRef} scale={0.3} >
                 <sphereGeometry />
-                <meshStandardMaterial color="red" />
+                <meshStandardMaterial color={hipsColor} />
                 <axesHelper scale={3} />
 
                 {/* Waist */}
                 <mesh ref={waistRef} >
                     <sphereGeometry />
-                    <meshStandardMaterial color="lightseagreen" />
+                    <meshStandardMaterial color={waistColor} />
                     <axesHelper scale={3} />
 
                     {/* Back */}
                     <mesh ref={backRef} >
                         <sphereGeometry />
-                        <meshStandardMaterial color="lightblue" />
+                        <meshStandardMaterial color={backColor} />
                         <axesHelper scale={3} />
 
                         {/* Neck */}
                         <mesh ref={neckRef} >
                             <sphereGeometry />
-                            <meshStandardMaterial color="darkslateblue" />
+                            <meshStandardMaterial color={neckColor} />
                             <axesHelper scale={3} />
  
                             {/* Head */}
                             <mesh ref={headRef} >
                                 <sphereGeometry />
-                                <meshStandardMaterial color="black" />
+                                <meshStandardMaterial color={headColor} />
                                 <axesHelper scale={3} />
                             </mesh> 
                            
                             {/* Right Shoulder */}
                             <mesh ref={rightShoulderRef} >
                                 <sphereGeometry />
-                                <meshStandardMaterial color="hotpink" />
+                                <meshStandardMaterial color={rightShoulderColor} />
                                 <axesHelper scale={3} />
 
                                 {/* Right Upper Arm */}
                                 <mesh ref={rightUpperArmRef} >
                                     <sphereGeometry />
-                                    <meshStandardMaterial color="hotpink" />
+                                    <meshStandardMaterial color={rightUpperArmColor}  />
                                     <axesHelper scale={3} />
                                     
                                     {/* Right Lower Arm */}
                                     <mesh ref={rightLowerArmRef} >
                                         <sphereGeometry />
-                                        <meshStandardMaterial color="orange" />
+                                        <meshStandardMaterial color={rightLowerArmColor} />
                                         <axesHelper scale={3} />
 
                                         {/* Right Hand */}
                                         <mesh ref={rightHandRef} >
                                             <sphereGeometry />
-                                            <meshStandardMaterial color="saddlebrown" />
+                                            <meshStandardMaterial color={rightHandColor} />
                                             <axesHelper scale={3} />
                                         </mesh>  
                                     </mesh> 
@@ -232,25 +280,25 @@ function SkeletonModel() {
                             {/* Left Shoulder */}
                             <mesh ref={leftShoulderRef} >
                                 <sphereGeometry />
-                                <meshStandardMaterial color="hotpink" />
+                                <meshStandardMaterial color={leftShoulderColor} />
                                 <axesHelper scale={3} />
                                 
                                 {/* Left Upper Arm */}
                                 <mesh ref={leftUpperArmRef}  >
                                     <sphereGeometry />
-                                    <meshStandardMaterial color="hotpink" />
+                                    <meshStandardMaterial color={leftUpperArmColor} />
                                     <axesHelper scale={3} />
                                     
                                     {/* Left Lower Arm */}
                                     <mesh ref={leftLowerArmRef} >
                                         <sphereGeometry />
-                                        <meshStandardMaterial color="orange" />
+                                        <meshStandardMaterial color={leftLowerArmColor} />
                                         <axesHelper scale={3} />
 
                                         {/* Left Hand */}
                                         <mesh ref={leftHandRef} >
                                             <sphereGeometry />
-                                            <meshStandardMaterial color="saddlebrown" />
+                                            <meshStandardMaterial color={leftHandColor} />
                                             <axesHelper scale={3} />
                                         </mesh>  
                                     </mesh>  
@@ -265,17 +313,17 @@ function SkeletonModel() {
                 {/* Right Upper Leg */}
                 <mesh ref={rightUpperLegRef}  >
                     <sphereGeometry  />
-                    <meshStandardMaterial color="yellow" />
+                    <meshStandardMaterial color={rightUpperLegColor} />
                     <axesHelper scale={3} />
                     {/* Right Lower Leg */}
                     <mesh ref={rightLowerLegRef} >
                             <sphereGeometry  />
-                            <meshStandardMaterial color="green" />
+                            <meshStandardMaterial color={rightLowerLegColor} />
                             <axesHelper scale={3} />
                             {/* Right Foot */}
                             <mesh ref={rightFootRef} >
                                     <sphereGeometry  />
-                                    <meshStandardMaterial color="blue" />
+                                    <meshStandardMaterial color={rightFootColor} />
                                     <axesHelper scale={3} />
                             </mesh>   
                     </mesh> 
@@ -284,18 +332,18 @@ function SkeletonModel() {
                 {/* Left Upper Leg */}
                 <mesh ref={leftUpperLegRef}>
                     <sphereGeometry  />
-                    <meshStandardMaterial color="yellow" />
+                    <meshStandardMaterial color={leftUpperLegColor} />
                     <axesHelper scale={3} />
 
                      {/* Right Lower Leg */}
                     <mesh ref={leftLowerLegRef} >
                         <sphereGeometry  />
-                        <meshStandardMaterial color="green" />
+                        <meshStandardMaterial color={leftLowerLegColor} />
                         <axesHelper scale={3} />
                         {/* Right Foot */}
                         <mesh ref={leftFootRef}  >
                             <sphereGeometry  />
-                            <meshStandardMaterial color="blue" />
+                            <meshStandardMaterial color={leftFootColor} />
                             <axesHelper scale={3} />
                         </mesh>   
                     </mesh> 
@@ -303,41 +351,14 @@ function SkeletonModel() {
 
             </mesh>   
 
-            {/* 🔹 useEffect 이후 실행 */}
-            {/* {      
-                refsReady &&
-                    boneRefList.map(([parent, childList], index) => {
-
-                        console.log(1)
-                        let parentPosition = new THREE.Vector3();
-                        parent.current.getWorldPosition(parentPosition);
-
-                        return childList.map((child, i) => {
-                            if (!child.current) return null;
-
-                            let childPosition = new THREE.Vector3();
-                            child.current.getWorldPosition(childPosition);
-
-                            return (
-                                <Stick
-                                    key={`stick-${index}-${i}`}
-                                    start={parentPosition}
-                                    end={childPosition}
-                                />
-                            );
-                        });
-                    })
-            } */}
-             {/* Stick 동적 업데이트 */}
+             {/* 관절 막대 연결 */}
              {
-             boneRefList.map(([parent, childList], index) => {
-                console.log(1)
-                return childList.map((child, i) => (
-                    <Stick key={`stick-${index}-${i}`} parentRef={parent} childRef={child} />
-                ))
-             }
-                
-            )}
+                boneRefList.map(([parent, childList], index) => {
+                    return childList.map((child, i) => (
+                        <Stick key={`stick-${index}-${i}`} parentRef={parent} childRef={child} />
+                    ))
+                })
+            }
 
         </>
 
@@ -345,7 +366,7 @@ function SkeletonModel() {
   }
   
   
-function Skeleton() {
+function Skeleton({sensorID}) {
 
     
     return (
@@ -354,7 +375,7 @@ function Skeleton() {
                 <ambientLight intensity={2.0} />
                 <OrbitControls />
                 
-                <SkeletonModel />
+                <SkeletonModel sensorID={sensorID}/>
                 
                 
                 {/* 바닥 그리드 */}

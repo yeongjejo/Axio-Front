@@ -85,10 +85,12 @@
 .version {
   width: 7%;
   height: 30%;
-  font-size: 1.2vw;
+    font-size: clamp(5px, 3vw, 2.3vh);
   font-weight: 500;
   color: white;
   text-align: center;
+
+  white-space: nowrap;
 
   margin-left: 5%;
 
