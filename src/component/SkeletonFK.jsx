@@ -1,9 +1,11 @@
 import React, { useRef, useEffect, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Mask, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import { useControls } from "leva";
 import { rand } from "three/tsl";
+import { FBXLoader } from "three/examples/jsm/Addons.js";
+import MixamoModel from "./MixamoModel";
 
 
 
@@ -30,7 +32,7 @@ const Stick = ({ parentRef, childRef }) => {
             if (ref.current) {
                 ref.current.position.copy(midPoint);
                 ref.current.quaternion.copy(quaternion);
-                ref.current.scale.set(1, length, 1);
+                ref.current.scale.set(2, length, 2);
             }
         }
     });
@@ -54,57 +56,24 @@ function setBoneWorldPosition(parent, child, position) {
         child.current.position.set(...parentWorldPosition)
 }
 
+function setBoneWorldQuaternion(boneRef, quaternion) {
+    const parentQuaternion = new THREE.Quaternion();
 
-// 🦴 **스켈레톤 모델 컴포넌트**
+    // 현재 객체의 부모 쿼터니언을 가져오기
+    boneRef.current.parent.getWorldQuaternion(parentQuaternion);
+
+    // 부모의 역(역원) 쿼터니언을 구한 후 곱하기
+    const localQuaternion = quaternion.clone().premultiply(parentQuaternion.invert()); 
+
+    // 로컬 쿼터니언으로 적용
+    boneRef.current.quaternion.copy(localQuaternion);
+    
+}
+
+
 function SkeletonModel({sensorID}) {
     const [beforSelectedSensor, setBeforSelectedSensor] = useState('hips');
 //     console.log("---------______________")
-    const hipsRef = useRef();
-    const waistRef = useRef();
-    const backRef = useRef();
-    const neckRef = useRef();
-    const headRef = useRef();
-    
-    const rightShoulderRef = useRef();
-    const rightUpperArmRef = useRef();
-    const rightLowerArmRef = useRef();
-    const rightHandRef = useRef();
-    
-    const leftShoulderRef = useRef();
-    const leftUpperArmRef = useRef();
-    const leftLowerArmRef = useRef();
-    const leftHandRef = useRef();
-
-    const rightUpperLegRef = useRef();
-    const rightLowerLegRef = useRef();
-    const rightFootRef = useRef();
-
-    const leftUpperLegRef = useRef();
-    const leftLowerLegRef = useRef();
-    const leftFootRef = useRef();
-
-    const boneRefList = [
-        [hipsRef, [waistRef, rightUpperLegRef, leftUpperLegRef]],
-        [waistRef, [backRef]],
-        [backRef, [neckRef]],
-        [neckRef, [headRef, rightShoulderRef, leftShoulderRef]],
-
-        [rightShoulderRef, [rightUpperArmRef]],
-        [rightUpperArmRef, [rightLowerArmRef]],
-        [rightLowerArmRef, [rightHandRef]],
-
-        [leftShoulderRef, [leftUpperArmRef]],
-        [leftUpperArmRef, [leftLowerArmRef]],
-        [leftLowerArmRef, [leftHandRef]],
-        
-        [rightUpperLegRef, [rightLowerLegRef]],
-        [rightLowerLegRef, [rightFootRef]],
-
-        [leftUpperLegRef, [leftLowerLegRef]],
-        [leftLowerLegRef, [leftFootRef]],
-    ]
-
-
 
 
     // 컬러 변경
@@ -157,17 +126,86 @@ function SkeletonModel({sensorID}) {
     boneColorState.set('leftUpperLeg', setLeftUpperLegColor)
     boneColorState.set('leftLowerLeg', setLeftLowerLegColor)
     boneColorState.set('leftFoot', setLeftFootColor)
+
+
+    const hipsRef = useRef();
+    const waistRef = useRef();
+    const backRef = useRef();
+    const neckRef = useRef();
+    const headRef = useRef();
+    
+    const rightShoulderRef = useRef();
+    const rightUpperArmRef = useRef();
+    const rightLowerArmRef = useRef();
+    const rightHandRef = useRef();
+    
+    const leftShoulderRef = useRef();
+    const leftUpperArmRef = useRef();
+    const leftLowerArmRef = useRef();
+    const leftHandRef = useRef();
+
+    const rightUpperLegRef = useRef();
+    const rightLowerLegRef = useRef();
+    const rightFootRef = useRef();
+
+    const leftUpperLegRef = useRef();
+    const leftLowerLegRef = useRef();
+    const leftFootRef = useRef();
+
+    const boneRefList = [
+        [hipsRef, [waistRef, rightUpperLegRef, leftUpperLegRef]],
+        [waistRef, [backRef]],
+        [backRef, [neckRef]],
+        [neckRef, [headRef, rightShoulderRef, leftShoulderRef]],
+
+        [rightShoulderRef, [rightUpperArmRef]],
+        [rightUpperArmRef, [rightLowerArmRef]],
+        [rightLowerArmRef, [rightHandRef]],
+
+        [leftShoulderRef, [leftUpperArmRef]],
+        [leftUpperArmRef, [leftLowerArmRef]],
+        [leftLowerArmRef, [leftHandRef]],
+        
+        [rightUpperLegRef, [rightLowerLegRef]],
+        [rightLowerLegRef, [rightFootRef]],
+
+        [leftUpperLegRef, [leftLowerLegRef]],
+        [leftLowerLegRef, [leftFootRef]],
+    ]
+
+
     
 
     var check = 0
 
+
     useFrame((state, delta) => {
         // console.log(refsReady)
         
-        if(check % 10 == 1) {
-            // rightUpperLegRef.current.quaternion.copy(new THREE.Quaternion().random().normalize())
-            // rightLowerLegRef.current.quaternion.copy(new THREE.Quaternion().random().normalize())
-            // rightFootRef.current.quaternion.copy(new THREE.Quaternion().random().normalize())
+        if(check % 50 == 1) {
+            setBoneWorldQuaternion(hipsRef, new THREE.Quaternion().random().normalize())
+            // setBoneWorldQuaternion(waistRef, new THREE.Quaternion().random().normalize())
+            // setBoneWorldQuaternion(backRef, new THREE.Quaternion().random().normalize())
+            // setBoneWorldQuaternion(neckRef, new THREE.Quaternion().random().normalize())
+            // setBoneWorldQuaternion(headRef, new THREE.Quaternion().random().normalize())
+
+            // setBoneWorldQuaternion(rightShoulderRef, new THREE.Quaternion().random().normalize())
+            // setBoneWorldQuaternion(rightUpperArmRef, new THREE.Quaternion().random().normalize())
+            // setBoneWorldQuaternion(rightLowerArmRef, new THREE.Quaternion().random().normalize())
+            // setBoneWorldQuaternion(rightHandRef, new THREE.Quaternion().random().normalize())
+
+            // setBoneWorldQuaternion(leftShoulderRef, new THREE.Quaternion().random().normalize())
+            // setBoneWorldQuaternion(leftUpperArmRef, new THREE.Quaternion().random().normalize())
+            // setBoneWorldQuaternion(leftLowerArmRef, new THREE.Quaternion().random().normalize())
+            // setBoneWorldQuaternion(leftHandRef, new THREE.Quaternion().random().normalize())
+            
+            // setBoneWorldQuaternion(rightUpperLegRef, new THREE.Quaternion().random().normalize())
+            // setBoneWorldQuaternion(rightLowerLegRef, new THREE.Quaternion().random().normalize())
+            // setBoneWorldQuaternion(rightFootRef, new THREE.Quaternion().random().normalize())
+            
+            // setBoneWorldQuaternion(leftUpperLegRef, new THREE.Quaternion().random().normalize())
+            // setBoneWorldQuaternion(leftLowerLegRef, new THREE.Quaternion().random().normalize())
+            // setBoneWorldQuaternion(leftFootRef, new THREE.Quaternion().random().normalize())
 
         }
         
@@ -175,6 +213,7 @@ function SkeletonModel({sensorID}) {
     })
 
 
+    
     useEffect(() => {
         hipsRef.current.position.set(0, 10, 0);
 
@@ -218,9 +257,9 @@ function SkeletonModel({sensorID}) {
     return (
         <>
             {/* Hips */}
-            <mesh ref={hipsRef} scale={0.3} >
+            <mesh ref={hipsRef} scale={0.3}  >
                 <sphereGeometry />
-                <meshStandardMaterial color={hipsColor} />
+                <meshStandardMaterial color={hipsColor}/>
                 <axesHelper scale={3} />
 
                 {/* Waist */}
@@ -364,25 +403,37 @@ function SkeletonModel({sensorID}) {
 
     );
   }
+
+
   
+const CameraController = () => {
+    const { camera } = useThree();
+
+    useFrame(() => {
+        camera.lookAt(0, 5, 0); // ✅ 매 프레임마다 카메라가 (0,10,0)을 바라보도록 설정
+    });
+
+    return null;
+}
   
 function Skeleton({sensorID}) {
 
-    
     return (
         <>  
-            <Canvas camera={{ position: [0, 30, 30], fov: 60, near: 0.1, far: 1000 }}>
-                <ambientLight intensity={2.0} />
+            <Canvas camera={{ position: [-15, 23, 20], fov: 60, near: 0.1, far: 1000}}>
+                <CameraController />
+                <directionalLight position={[5, 10, 5]} intensity={2} castShadow />
+                <ambientLight intensity={0.7} />
+                {/* <ambientLight intensity={2.0} /> */}
                 <OrbitControls />
                 
                 <SkeletonModel sensorID={sensorID}/>
                 
+                {/* <MixamoModel /> */}
                 
                 {/* 바닥 그리드 */}
                 {/* <gridHelper args={[100, 100, 'red', 'red']}  position={[0, -0.5, 0]}  /> */}
                 <gridHelper args={[100, 100]}  position={[0, -0.3, 0]}  />
-
-
 
 
             </Canvas>

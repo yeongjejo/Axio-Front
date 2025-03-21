@@ -34,7 +34,8 @@ const Modal = () => {
               </div>
 
               <div className="modal-btn-group">
-                <div className={'modal-btn'} onClick={() => navigate("/main")}>
+                {/* <div className={'modal-btn'} onClick={() => navigate("/main", {state: "tes"})}> */}
+                <div className={'modal-btn'} onClick={() => navigate("/main",)}>
                     저장
                 </div>
                 <div className="space"/>

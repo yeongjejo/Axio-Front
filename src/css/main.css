@@ -11,13 +11,23 @@ p {
     font-size: 1.3vh !important;
 }
 
-
+.overlay-text {
+    position: absolute; /* 📌 SkeletonFK 위에 겹치게 배치 */
+    bottom: 1%;
+    left: 50%;
+    color: white;
+    font-size: 1%;
+    background: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+    padding: 3% 3%;
+    border-radius: 10px;
+    z-index: 10; /* 📌 다른 요소보다 위에 표시 */
+}
 
 
 .main {
     width: 100vw;
     height: 80vh;
-    background-color: #464646;
+    background-color: #323436;
     display: flex;
 }
 
@@ -36,6 +46,7 @@ p {
     
     overflow: auto;
     border-radius: 25px;
+    position: relative;
 }
 
 
@@ -88,8 +99,10 @@ p {
     box-shadow: 5px 5px 20px;
     transition: all 0.5s;
     margin: 1.2%;
-    background-color: #303437;
+    background-color: #24282B;
     overflow:hidden;
+    
+    cursor : pointer;
   }
 .part-card:hover {
     width: 23%;
@@ -128,50 +141,3 @@ p {
     max-width: 100%; /* 부모 요소를 넘지 않도록 제한 */
 }
   
-.footer {
-    width: 100vw;
-    height: 10vh;
-    background-color: #464646;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: clamp(5px, 3vw, 2.3vh);
-    white-space: nowrap;
-}
-
-.foot-bar {
-    width: 100%;
-    height: 50%;
-    margin: 1.5%;
-    background-color: #303437;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-}
-
-.foot-bar-btn {
-    width: 10%;
-    height: 80%;
-    margin: 1.5%;
-    /* background-color: blueviolet; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-}
-
-
-
-
-.menu-logo {
-    width: 15%;
-    height: 100%;
-    background-image: url('/img/Icon.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    
-    margin-right: 3%;
-
-}
-

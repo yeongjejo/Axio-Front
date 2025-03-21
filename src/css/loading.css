@@ -19,7 +19,7 @@
 .top {
   width: 100vw;
   height: 60vh;
-  background-color: blue;
+  /* background-color: blue; */
   display: flex;
   justify-content: center; /* 자식 요소를 가로(수평) 기준으로 가운데 정렬시킴 */
   align-items:end ; /* 자식 요소를 세로(수직) 기준으로 가운데 정렬시킴 */
@@ -31,7 +31,7 @@
   width: 15vw;
   height: 15vh;
 
-  background-color: pink;
+  /* background-color: pink; */
   background-image: url('/img/axio_logo.svg');
   background-size: contain;
   background-repeat: no-repeat;
@@ -44,7 +44,7 @@
 #middle {
   width: 100vw;
   height: 25vh;
-  background-color: green;
+  /* background-color: green; */
   text-align: center;
   display: flex;
   flex-direction: column;  /* ✅ 세로 방향으로 정렬 */
@@ -76,7 +76,7 @@
 .bottom {
     width: 100vw;
     height: 15vh;
-    background-color: aqua;
+    /* background-color: aqua; */
     display: flex;
     align-items : center;
     justify-content: space-between;
@@ -104,7 +104,7 @@
 }
 
 .serialkey {
-    background-color: rgb(196, 106, 151);
+    /* background-color: rgb(196, 106, 151); */
     height: 30%;
 
     margin-right: 5%;

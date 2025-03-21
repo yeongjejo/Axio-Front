@@ -5,10 +5,15 @@ import Skeleton from '../component/Skeleton';
 import SkeletonFK from '../component/SkeletonFK';
 import SensorData from '/src/js/SensorData.js'
 import Header from '../component/Header';
+import Footer from '../component/Footer';
+import { useLocation } from 'react-router-dom';
 
 
 
 function MainPage() {
+  // const location = useLocation().state
+  // console.log(location)
+
   const [selectedSensor, setsSlectedSensor] = useState('')
 
   const sensorData = [
@@ -73,7 +78,8 @@ function MainPage() {
           <div className='three'>
             <div className='three-postion'>
               {/* {console.log(selectedSensor)} */}
-              <SkeletonFK sensorID={selectedSensor}/>
+              <SkeletonFK sensorID={selectedSensor} />
+              <div className="overlay-text">tt</div>
             </div>
           </div>
           <div className='sensor-list'>
@@ -107,41 +113,8 @@ function MainPage() {
 
         </div>
 
+        <Footer currentPage={'main'} />
 
-
-
-        <div className="footer">
-            <div className='foot-bar'>
-              
-              <div className='foot-bar-btn'>
-                <div className='menu-logo' />
-                홈
-              </div>
-              <div className='foot-bar-btn'>
-              <div className='menu-logo' />
-                연결
-              </div>
-              <div className='foot-bar-btn'>
-              <div className='menu-logo' />
-                그래프
-              </div>
-              <div className='foot-bar-btn'>
-              <div className='menu-logo' />
-                햅틱
-              </div>
-              <div className='foot-bar-btn'>
-              <div className='menu-logo' />
-                바디설정
-              </div>
-              
-              <div className='foot-bar-btn'>
-              <div className='menu-logo' />
-                설정
-              </div>
-
-
-            </div>
-        </div>
       </>
     )
 }
