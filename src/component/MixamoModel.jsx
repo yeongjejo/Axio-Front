@@ -4,6 +4,7 @@ import { Mask, OrbitControls } from "@react-three/drei";
 
 import * as THREE from "three";
 import { FBXLoader } from "three/examples/jsm/Addons.js";
+import BoneRotation from "./BoneRotaion";
 
 
 
@@ -43,12 +44,12 @@ function MixamoModel() {
     const fbxRef = useRef();
     const [character, setCharacter] = useState(null);
     const boneRefs = useRef({}); // Bone 저장소
+    const [isReady, setIsReady] = useState(false); // ✅ bone 준비 상태
 
     useEffect(() => {
         const loader = new FBXLoader();
-        // loader.load("/model/character2.fbx", (fbx) => {
-        loader.load("/model/XBot.fbx", (fbx) => {
-            // console.log(fbx)
+        // loader.load("/model/test3.fbx", (fbx) => {
+        loader.load("/model/YBot.fbx", (fbx) => {
             fbx.scale.set(0.1, 0.1, 0.1); // 모델 크기 조정
             setCharacter(fbx);
         });
@@ -61,31 +62,52 @@ function MixamoModel() {
                 if (child.isBone) {
                     // console.log("Bone Found:", child.quaternion); // 모든 Bone 확인
                     const boneCheck = containsValue(boneMapping, child.name)
-                    console.log(boneCheck)
+                    // console.log(boneCheck)
                     if (boneCheck[0]) {
-                        console.log(111)
-                        boneRefs.current[boneCheck[1]] = child; // Bone 저장
-                        child.quaternion.copy(new THREE.Quaternion().random().normalize())
+                        // 두번 저장되는데 두번째는 자식이 짤려있음
+                        // 그래서 최초꺼만 저장하도록
+                        if (!boneRefs.current[boneCheck[1]]) {
+                            boneRefs.current[boneCheck[1]] = child; // Bone 저장
+
+                        }
+    
                     }
                 }
+                
+                setIsReady(true);
+                // 다음주에 와서 boneRefs순서 스켈레톤 순서와 맞춰야됨
+                console.log(boneRefs)
+
             });
         }
-
-        console.log(boneRefs.current)
     }, [character]);
 
-    
     // useFrame(() => {
-    //     if (boneRefs.current["mixamorigHips"]) {
-    //         boneRefs.current["mixamorigHips"].quaternion.multiplyQuaternions(
-    //             boneRefs.current["mixamorigHips"].quaternion,
-    //             new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), 0.01)
-    //         );
+    //     if (isReady && boneRefs.current['hips']) {
+    //         // console.log(boneRefs.current['hips'], 111)
+
+    //         boneRefs.current['hips'].quaternion.copy(new THREE.Quaternion().random().normalize())
+            
+    //         // console.log(boneRefs.current['hips'], 111)
+
     //     }
-    // });
+    // }, [isReady]);
+
+
+
 
     
-    return character ? <primitive object={character} ref={fbxRef} /> : null;
+    return (
+        <>
+            {character && <primitive object={character} ref={fbxRef} />}
+            {/* {isReady && (
+                // console.log(Object.values(boneRefs.current), 111)
+                <BoneRotation
+                    boneRefList={Object.values(boneRefs.current)} // ✅ 배열로 넘김
+                />
+            )} */}
+        </>
+    );
 }
 
 export default MixamoModel

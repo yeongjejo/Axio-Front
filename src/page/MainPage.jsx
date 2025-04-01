@@ -39,7 +39,6 @@ function MainPage() {
   ];
 
 
-
   // 센서 버튼 클릭 이벤트
   useEffect(() => {
     for(let sensor of sensorData) {
@@ -56,19 +55,64 @@ function MainPage() {
     }
   }, []); // 빈 배열을 넣어 한 번만 실행되도록 설정
 
-  // const [sensorData, setSensorData] = useState([]);
+
+
+  const [sensorData2, setSensorData2] = useState([]);
   // CEF에서 데이터를 업데이트하는 함수
-  // useEffect(() => {
-  //   window.updateSensorData = function (data) {
-  //     try {
-  //       const parsedData = JSON.parse(data);
-  //       setSensorData(parsedData); // 배열 데이터 업데이트
-  //     } catch (error) {
-  //       console.error("JSON Parsing Error:", error);
-  //     }
-  //   };
-  // }, []);
+  useEffect(() => {
+    window.updateSensorData = function (data) {
+      try {
+        
+        console.log("데이터 수신 성공", data);
+        setSensorData2(data)
+        // 위에 코드가 안될시(JSON 파싱 필요시) 아래 코드로 테스트
+        // const parsedData = JSON.parse(data);
+        // setSensorData2(parsedData); // 배열 데이터 업데이트
+        // console.log("데이터 수신 성공", sensorData2)
+      } catch (error) {
+        console.error("JSON Parsing Error:", error);
+      }
+    };
+  }, []);
   
+  // 19라인(sensorData) 하드 코드된 데이터 CEF에서 송수신 필요
+//===================================
+  // 1. C++에서 호출하는 예시
+//   browser->GetMainFrame()->ExecuteJavaScript(
+//     "window.updateSensorData('{\"id\": \"neck\", \"firmware\": \"v1.2.0\", \"type\": \"IMU\"}')",
+//     browser->GetMainFrame()->GetURL(),
+//     0
+// );
+//--------------------------
+// 예시: 전체 JSON 데이터 전달
+// std::string jsonData = R"([
+//   {
+//     "id": "neck",
+//     "firmware": "v1.2.0",
+//     "type": "IMU",
+//     "wearStatus": "Worn",
+//     "calibration": "Calibrated",
+//     "temperature": 37.2,
+//     "battery": 95
+//   },
+//   {
+//     "id": "rightShoulder",
+//     "firmware": "v1.2.0",
+//     "type": "IMU",
+//     "wearStatus": "Worn",
+//     "calibration": "Calibrated",
+//     "temperature": 36.9,
+//     "battery": 90
+//   }
+// ])";
+
+// // 전달할 자바스크립트 명령어 구성
+// std::string jsCode = "window.updateSensorData(" + jsonData + ");";
+
+// // 실행
+// browser->GetMainFrame()->ExecuteJavaScript(jsCode, browser->GetMainFrame()->GetURL(), 0);
+  
+//===================================
 
   return (
       <>

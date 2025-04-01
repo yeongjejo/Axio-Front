@@ -11,7 +11,7 @@ import SettingPage from './page/SettingPage.jsx'
 
 createRoot(document.getElementById('root')).render(
   // todo StrictMode 베포시 삭제 (또는 그전에 삭제 [한번])
-  <StrictMode>
+  // <StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<LoadingPage />} />
@@ -24,5 +24,5 @@ createRoot(document.getElementById('root')).render(
       </Routes>
     
     </BrowserRouter>
-  </StrictMode>,
+  // </StrictMode>,
 )

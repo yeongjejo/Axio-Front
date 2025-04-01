@@ -140,4 +140,6 @@ p {
     text-overflow: ellipsis; /* 너무 길면 '...' 표시 */
     max-width: 100%; /* 부모 요소를 넘지 않도록 제한 */
 }
+
+
   

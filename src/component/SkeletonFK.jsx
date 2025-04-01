@@ -6,11 +6,12 @@ import { useControls } from "leva";
 import { rand } from "three/tsl";
 import { FBXLoader } from "three/examples/jsm/Addons.js";
 import MixamoModel from "./MixamoModel";
+import BoneRotation from "./BoneRotaion";
 
 
 
 
-// 🦴 Stick: 관절 사이를 연결하는 막대
+// Stick: 관절 사이를 연결하는 막대
 const Stick = ({ parentRef, childRef }) => {
     const ref = useRef();
 
@@ -56,25 +57,10 @@ function setBoneWorldPosition(parent, child, position) {
         child.current.position.set(...parentWorldPosition)
 }
 
-function setBoneWorldQuaternion(boneRef, quaternion) {
-    const parentQuaternion = new THREE.Quaternion();
-
-    // 현재 객체의 부모 쿼터니언을 가져오기
-    boneRef.current.parent.getWorldQuaternion(parentQuaternion);
-
-    // 부모의 역(역원) 쿼터니언을 구한 후 곱하기
-    const localQuaternion = quaternion.clone().premultiply(parentQuaternion.invert()); 
-
-    // 로컬 쿼터니언으로 적용
-    boneRef.current.quaternion.copy(localQuaternion);
-    
-}
 
 
 function SkeletonModel({sensorID}) {
     const [beforSelectedSensor, setBeforSelectedSensor] = useState('hips');
-//     console.log("---------______________")
-
 
     // 컬러 변경
     const boneColorState = new Map();
@@ -133,12 +119,12 @@ function SkeletonModel({sensorID}) {
     const backRef = useRef();
     const neckRef = useRef();
     const headRef = useRef();
-    
+
     const rightShoulderRef = useRef();
     const rightUpperArmRef = useRef();
     const rightLowerArmRef = useRef();
     const rightHandRef = useRef();
-    
+
     const leftShoulderRef = useRef();
     const leftUpperArmRef = useRef();
     const leftLowerArmRef = useRef();
@@ -147,10 +133,12 @@ function SkeletonModel({sensorID}) {
     const rightUpperLegRef = useRef();
     const rightLowerLegRef = useRef();
     const rightFootRef = useRef();
-
+    
     const leftUpperLegRef = useRef();
     const leftLowerLegRef = useRef();
     const leftFootRef = useRef();
+
+    const [boneRefReady, setBoneRefReady] = useState(false);
 
     const boneRefList = [
         [hipsRef, [waistRef, rightUpperLegRef, leftUpperLegRef]],
@@ -175,44 +163,6 @@ function SkeletonModel({sensorID}) {
 
 
     
-
-    var check = 0
-
-
-    useFrame((state, delta) => {
-        // console.log(refsReady)
-        
-        if(check % 50 == 1) {
-            setBoneWorldQuaternion(hipsRef, new THREE.Quaternion().random().normalize())
-            // setBoneWorldQuaternion(waistRef, new THREE.Quaternion().random().normalize())
-            // setBoneWorldQuaternion(backRef, new THREE.Quaternion().random().normalize())
-            // setBoneWorldQuaternion(neckRef, new THREE.Quaternion().random().normalize())
-            // setBoneWorldQuaternion(headRef, new THREE.Quaternion().random().normalize())
-
-            // setBoneWorldQuaternion(rightShoulderRef, new THREE.Quaternion().random().normalize())
-            // setBoneWorldQuaternion(rightUpperArmRef, new THREE.Quaternion().random().normalize())
-            // setBoneWorldQuaternion(rightLowerArmRef, new THREE.Quaternion().random().normalize())
-            // setBoneWorldQuaternion(rightHandRef, new THREE.Quaternion().random().normalize())
-
-            // setBoneWorldQuaternion(leftShoulderRef, new THREE.Quaternion().random().normalize())
-            // setBoneWorldQuaternion(leftUpperArmRef, new THREE.Quaternion().random().normalize())
-            // setBoneWorldQuaternion(leftLowerArmRef, new THREE.Quaternion().random().normalize())
-            // setBoneWorldQuaternion(leftHandRef, new THREE.Quaternion().random().normalize())
-            
-            // setBoneWorldQuaternion(rightUpperLegRef, new THREE.Quaternion().random().normalize())
-            // setBoneWorldQuaternion(rightLowerLegRef, new THREE.Quaternion().random().normalize())
-            // setBoneWorldQuaternion(rightFootRef, new THREE.Quaternion().random().normalize())
-            
-            // setBoneWorldQuaternion(leftUpperLegRef, new THREE.Quaternion().random().normalize())
-            // setBoneWorldQuaternion(leftLowerLegRef, new THREE.Quaternion().random().normalize())
-            // setBoneWorldQuaternion(leftFootRef, new THREE.Quaternion().random().normalize())
-
-        }
-        
-        check += 1
-    })
-
-
     
     useEffect(() => {
         hipsRef.current.position.set(0, 10, 0);
@@ -240,18 +190,22 @@ function SkeletonModel({sensorID}) {
         setBoneWorldPosition(leftUpperLegRef, leftLowerLegRef, new THREE.Vector3(2, 5, 0))
         setBoneWorldPosition(leftLowerLegRef, leftFootRef, new THREE.Vector3(2, 0, 0))
 
+        setBoneRefReady(true)
+        console.log('2', hipsRef)
+
     }, []);
 
 
     useEffect(() => {
-        // console.log(sensorID)
         if (boneColorState.has(sensorID)) {
-            boneColorState.get(sensorID)("red")
             boneColorState.get(beforSelectedSensor)("darkslateblue")
+            boneColorState.get(sensorID)("red")
             setBeforSelectedSensor(sensorID)
         }
 
     }, [sensorID]);
+
+
 
 
     return (
@@ -390,8 +344,34 @@ function SkeletonModel({sensorID}) {
 
             </mesh>   
 
-             {/* 관절 막대 연결 */}
-             {
+
+            {
+                boneRefReady &&
+                <BoneRotation boneRefList={[
+                hipsRef.current,
+                waistRef.current,
+                backRef.current,
+                neckRef.current,
+                headRef.current,
+                rightShoulderRef.current,
+                rightUpperArmRef.current,
+                rightLowerArmRef.current,
+                rightHandRef.current,
+                leftShoulderRef.current,
+                leftUpperArmRef.current,
+                leftLowerArmRef.current,
+                leftHandRef.current,
+                rightUpperLegRef.current,
+                rightLowerLegRef.current,
+                rightFootRef.current,
+                leftUpperLegRef.current,
+                leftLowerLegRef.current,
+                leftFootRef.current,
+                ]} />
+            }
+
+            {/* 관절 막대 연결 */}
+            {   
                 boneRefList.map(([parent, childList], index) => {
                     return childList.map((child, i) => (
                         <Stick key={`stick-${index}-${i}`} parentRef={parent} childRef={child} />
@@ -427,9 +407,9 @@ function Skeleton({sensorID}) {
                 {/* <ambientLight intensity={2.0} /> */}
                 <OrbitControls />
                 
-                <SkeletonModel sensorID={sensorID}/>
+                {/* <SkeletonModel sensorID={sensorID}/> */}
                 
-                {/* <MixamoModel /> */}
+                <MixamoModel />
                 
                 {/* 바닥 그리드 */}
                 {/* <gridHelper args={[100, 100, 'red', 'red']}  position={[0, -0.5, 0]}  /> */}
