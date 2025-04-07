@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import '/src/css/main.css'
 import { useFrame } from '@react-three/fiber';
-import Skeleton from '../component/Skeleton';
-import SkeletonFK from '../component/SkeletonFK';
 import SensorData from '/src/js/SensorData.js'
 import Header from '../component/Header';
 import Footer from '../component/Footer';
 import { useLocation } from 'react-router-dom';
+import Model from '../model/Model';
+
+
 
 
 
@@ -15,6 +16,7 @@ function MainPage() {
   // console.log(location)
 
   const [selectedSensor, setsSlectedSensor] = useState('')
+  const [skeletonMode, setSkeletonMode] = useState(true)
 
   const sensorData = [
     new SensorData('hips', "1.2.0", "IMU", "Worn", "Calibrated", 36.5, 120),
@@ -122,15 +124,23 @@ function MainPage() {
           <div className='three'>
             <div className='three-postion'>
               {/* {console.log(selectedSensor)} */}
-              <SkeletonFK sensorID={selectedSensor} />
-              <div className="overlay-text">tt</div>
+              <Model sensorID={selectedSensor} model={skeletonMode} />
+              <div className="overlay-text">
+                <div className='select-model-model' onClick={()=>{setSkeletonMode(true)}}>
+                  <div className={`menu-logo2 ${skeletonMode ? "active" : ""}`}/>
+                  <div className={`radio-text ${skeletonMode ? "active" : ""}`}>스켈레톤</div>
+                </div>
+                <div className='spacing'/>
+                <div className='select-model-model' onClick={()=>{setSkeletonMode(false)}}>
+                  <div className={`menu-logo2 ${!skeletonMode ? "active" : ""}`}/>
+                  <div className={`radio-text ${!skeletonMode ? "active" : ""}`}>믹사모</div>
+                </div>
+              </div>
             </div>
           </div>
           <div className='sensor-list'>
             <div className='scrollbar-widget'>
-            
-              
-              {/* ✅ 데이터 배열 크기만큼 동적으로 생성 */}
+              {/* 데이터 배열 크기만큼 동적으로 생성 */}
               {sensorData.map((sensor, index) => {
                 // console.log(33)
                 return(

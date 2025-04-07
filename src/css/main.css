@@ -11,17 +11,65 @@ p {
     font-size: 1.3vh !important;
 }
 
+.spacing {
+    margin-top:10%;
+  }
+
 .overlay-text {
-    position: absolute; /* 📌 SkeletonFK 위에 겹치게 배치 */
+    position: absolute; /* SkeletonFK 위에 겹치게 배치 */
     bottom: 1%;
-    left: 50%;
+    right: 5%;
     color: white;
     font-size: 1%;
     background: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
-    padding: 3% 3%;
+    padding: 2% 2%;
     border-radius: 10px;
-    z-index: 10; /* 📌 다른 요소보다 위에 표시 */
+    z-index: 10; /* 다른 요소보다 위에 표시 */
+    
 }
+
+.select-model-mode {
+    float: left;
+}
+
+.menu-logo2 {
+    width: 1vw;
+    height: 1.5vh;
+    background-image: url('/img/Icon.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-top: auto;
+    margin-bottom: auto;
+    
+/* 
+    background-color: aqua; */
+    position:static;
+    
+
+}
+
+.menu-logo2.active {
+    background-image: url('/img/Icon2.png');
+
+}
+
+.radio-text {
+    font-size: 1.7vh;
+    font-weight: 300;
+}
+
+.radio-text.active {
+    font-size: 1.7vh;
+    font-weight: 800;
+}
+
+.select-model-model {
+    white-space: nowrap;
+    display: flex;
+    cursor : pointer;
+}
+
 
 
 .main {
@@ -142,4 +190,4 @@ p {
 }
 
 
-  
+
