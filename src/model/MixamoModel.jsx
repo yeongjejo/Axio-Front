@@ -68,7 +68,7 @@ function MixamoModel() {
                 
                 setIsReady(true);
                 // 다음주에 와서 boneRefs순서 스켈레톤 순서와 맞춰야됨
-                console.log(boneRefs)
+                // console.log(boneRefs)
 
             });
         }

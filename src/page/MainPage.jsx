@@ -119,7 +119,6 @@ function MainPage() {
   return (
       <>
         <Header />
-
         <div className="main">
           <div className='three'>
             <div className='three-postion'>

@@ -19,16 +19,25 @@ function Model({sensorID, model}) {
         <>  
             <Canvas camera={{ position: [-15, 23, 20], fov: 60, near: 0.1, far: 1000}}>
                 <CameraController />
-                <directionalLight position={[5, 10, 5]} intensity={2} castShadow />
-                <ambientLight intensity={0.7} />
-                {/* <ambientLight intensity={2.0} /> */}
                 <OrbitControls />
+
+                {!model && (
+                    <>
+                        <directionalLight position={[5, 10, 5]} intensity={2} castShadow />
+                        <ambientLight intensity={0.7} />
+                        <MixamoModel />
+                    </>
+                )}
                 
-                {model && (<SkeletonModel sensorID={sensorID}/>)}
+                {model && (
+                    <>
+                        <ambientLight intensity={2.0} />
+                        <SkeletonModel sensorID={sensorID}/>
+                    </>
+                )}
                 
-                {!model && (<MixamoModel />)}
+
                 
-                {/* <MixamoModel /> */}
                 
                 {/* 바닥 그리드 */}
                 {/* <gridHelper args={[100, 100, 'red', 'red']}  position={[0, -0.5, 0]}  /> */}

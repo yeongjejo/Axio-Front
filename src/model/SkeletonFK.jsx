@@ -134,6 +134,7 @@ function SkeletonModel({sensorID}) {
 
     const [boneRefReady, setBoneRefReady] = useState(false);
 
+    // 관절 막대 연결 용도
     const boneRefList = [
         [hipsRef, [waistRef, rightUpperLegRef, leftUpperLegRef]],
         [waistRef, [backRef]],
@@ -185,7 +186,7 @@ function SkeletonModel({sensorID}) {
         setBoneWorldPosition(leftLowerLegRef, leftFootRef, new THREE.Vector3(2, 0, 0))
 
         setBoneRefReady(true)
-        console.log('2', hipsRef)
+        // console.log('2', hipsRef)
 
     }, []);
 
@@ -205,7 +206,7 @@ function SkeletonModel({sensorID}) {
     return (
         <>
             {/* Hips */}
-            <mesh ref={hipsRef} scale={0.3}  >
+            <mesh ref={hipsRef} scale={0.3} name="hips"  >
                 <sphereGeometry />
                 <meshStandardMaterial color={hipsColor}/>
                 <axesHelper scale={3} />
