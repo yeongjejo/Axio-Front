@@ -23,9 +23,17 @@
     align-items: center;
 }
 
+.left-info-area {
+    height: 50%;
+    aspect-ratio: 1 / 1; /* 정사각형 유지 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor : pointer;
+}
 .wifi-logo {
-    height: 30%;
-    width: 10%;
+    height: 100%;
+    aspect-ratio: 1 / 1; /* 정사각형 유지 */
     margin-right: 1%;
     background-image: url('/img/wifi.svg');
     background-size: contain;
@@ -39,8 +47,8 @@
 }
 
 .tpose-logo {
-    height: 30%;
-    width: 10%;
+    height: 100%;
+    aspect-ratio: 1 / 1; /* 정사각형 유지 */
     margin-right: 1%;
     background-image: url('/img/repeat.svg');
     background-size: contain;
@@ -49,9 +57,6 @@
 
 }
 
-.wifi-state {
-    color: white;
-}
 
 .main-logo {
     width: 60%;
@@ -71,8 +76,8 @@
 }
 
 .widow-state {
-    width: 3vh;
-    height: 3vh;
+    height: 50%;
+    aspect-ratio: 1 / 1; /* 정사각형 유지 */
     color: white;
     border-radius: 20%;
     border: 1px solid rgb(255, 255, 255);

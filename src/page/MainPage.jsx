@@ -73,7 +73,7 @@ function MainPage() {
       }
     };
   }, []);
-  
+
   // 19라인(sensorData) 하드 코드된 데이터 CEF에서 송수신 필요
 //===================================
   // 1. C++에서 호출하는 예시
@@ -113,25 +113,37 @@ function MainPage() {
   
 //===================================
 
+
+
   return (
       <>
         <Header />
         <div className="main">
           <div className='three'>
             <div className='three-postion'>
-              {/* {console.log(selectedSensor)} */}
+              {/* <Model sensorID={selectedSensor} model={skeletonMode} /> */}
               <Model sensorID={selectedSensor} model={skeletonMode} />
-              <div className="overlay-text">
-                <div className='select-model-model' onClick={()=>{setSkeletonMode(true)}}>
-                  <div className={`menu-logo2 ${skeletonMode ? "active" : ""}`}/>
-                  <div className={`radio-text ${skeletonMode ? "active" : ""}`}>스켈레톤</div>
+
+
+              {skeletonMode ? (
+                <div className="select-mixamo-overlay" onClick={() => {setSkeletonMode(false);}}>
+                  <div className="select-mixamo">
+                    <div className="radio-mixamo"></div>
+                  </div>
                 </div>
-                <div className='spacing'/>
-                <div className='select-model-model' onClick={()=>{setSkeletonMode(false)}}>
-                  <div className={`menu-logo2 ${!skeletonMode ? "active" : ""}`}/>
-                  <div className={`radio-text ${!skeletonMode ? "active" : ""}`}>믹사모</div>
+                ) : (
+                <div className="select-skeleton-overlay" onClick={() => {setSkeletonMode(true);}}>
+                  <div className="select-skeleton">
+                    <div className="radio-skeleton"></div>
+                  </div>
                 </div>
+              )}
+              
+              <div className='toggle-btn-area' >
+                <div className={`toggle-btn ${skeletonMode ? "active" : ""}`} onClick={() => {setSkeletonMode(true);}}/>
+                <div className={`toggle-btn ${!skeletonMode ? "active" : ""}`} onClick={() => {setSkeletonMode(false);}}/>
               </div>
+ 
             </div>
           </div>
           <div className='sensor-list'>
@@ -143,11 +155,11 @@ function MainPage() {
                 <section className="part-card" key={index} id={sensor.id}>
                   <div className='part-img' />
                   <div className='part-info'>
-                    <p>펌웨어 버전 : {sensor.firmware}</p>
-                    <p>타입 : {sensor.type}</p>
-                    <p>착용 상태 : {sensor.wearStatus}</p>
-                    <p>보정 상태 : {sensor.calibration}</p>
-                    <p>온도 : {sensor.temperature}°C</p>
+                    <p>Firmware Version : {sensor.firmware}</p>
+                    <p>Type : {sensor.type}</p>
+                    <p>Wearing Status : {sensor.wearStatus}</p>
+                    <p>Calibration Status : {sensor.calibration}</p>
+                    <p>Temperature : {sensor.temperature}°C</p>
                     <div className='part-id'>
                       <p>SensorID : {sensor.id}</p>
                     </div>

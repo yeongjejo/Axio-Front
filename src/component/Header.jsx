@@ -72,11 +72,17 @@ const Header = () => {
         <>
             <div className='header'>
             <div className='left-info'>
-                <div className='wifi-logo' />
-                <div className='wifi-state'>1ms</div>
+                <div className='left-info-area'>
+                    <div className='wifi-logo' />
+                    <div className='wifi-state'>1ms</div>
+                </div>
                 <div className='spacing' />
-                <div className='tpose-logo' />
-                <div className='wifi-state' onClick={onClickTposeBtn}>전체정렬</div>
+                <div className='left-info-area'>
+                    <div className='tpose-logo' />
+                    {/* <div className='wifi-state' onClick={onClickTposeBtn}>전체정렬</div> */}
+                    <div className='wifi-state' onClick={onClickTposeBtn}>T-Pose</div>
+
+                </div>
             </div>
 
             <div className='main-logo' />

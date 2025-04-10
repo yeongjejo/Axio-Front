@@ -14,28 +14,34 @@ function Footer( location ) {
                 <div className='foot-bar'>
                     <div className={`foot-bar-btn ${currentPage === "main" ? "active" : ""}`} onClick={() => navigate("/main",)}>
                         <div className={`menu-logo ${currentPage === "main" ? "active" : ""}`} />
-                        홈
+                        {/* 홈 */}
+                        Home
                     </div>
                     <div className={`foot-bar-btn ${currentPage === "connection" ? "active" : ""}`} onClick={() => navigate("/connection",)}>
                         <div className={`menu-logo ${currentPage === "connection" ? "active" : ""}`}/>
-                        연결
+                        {/* 연결 */}
+                        Connection
                     </div>
                     <div className={`foot-bar-btn ${currentPage === "graph" ? "active" : ""}`} onClick={() => navigate("/graph",)}>
                         <div className={`menu-logo ${currentPage === "graph" ? "active" : ""}`}/>
-                        그래프
+                        {/* 그래프 */}
+                        Graph
                     </div>
                     <div className={`foot-bar-btn ${currentPage === "haptic" ? "active" : ""}`} onClick={() => navigate("/haptic",)}>
                         <div className={`menu-logo ${currentPage === "haptic" ? "active" : ""}`}/>
-                        햅틱
+                        {/* 햅틱 */}
+                        Haptic
                     </div>
                     <div className={`foot-bar-btn ${currentPage === "body" ? "active" : ""}`} onClick={() => navigate("/body",)}>
                         <div className={`menu-logo ${currentPage === "body" ? "active" : ""}`}/>
-                        바디설정
+                        {/* 바디설정 */}
+                        Bone
                     </div>
                     
                     <div className={`foot-bar-btn ${currentPage === "setting" ? "active" : ""}`} onClick={() => navigate("/setting",)}>
                         <div className={`menu-logo ${currentPage === "setting" ? "active" : ""}`}/>
-                        설정
+                        {/* 설정 */}
+                        Setting
                     </div>
                 </div>
             </div>
