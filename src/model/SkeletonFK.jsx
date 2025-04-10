@@ -340,7 +340,7 @@ function SkeletonModel({sensorID}) {
             </mesh>   
 
 
-            {
+            {/* {
                 boneRefReady &&
                 <BoneRotation boneRefList={[
                 hipsRef.current,
@@ -362,6 +362,35 @@ function SkeletonModel({sensorID}) {
                 leftUpperLegRef.current,
                 leftLowerLegRef.current,
                 leftFootRef.current,
+                ]} />
+            } */}
+
+{
+                boneRefReady &&
+                <BoneRotation boneRefList={[
+                hipsRef.current,
+                backRef.current,
+                neckRef.current,
+
+                leftShoulderRef.current,
+                leftUpperArmRef.current,
+                leftLowerArmRef.current,
+                leftHandRef.current,
+
+                rightShoulderRef.current,
+                rightUpperArmRef.current,
+                rightLowerArmRef.current,
+                rightHandRef.current,
+
+
+                leftUpperLegRef.current,
+                leftLowerLegRef.current,
+                leftFootRef.current,
+
+                
+                rightUpperLegRef.current,
+                rightLowerLegRef.current,
+                rightFootRef.current,
                 ]} />
             }
 

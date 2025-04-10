@@ -11,3 +11,5 @@ class SensorData {
   }
   
 export default SensorData;
+
+

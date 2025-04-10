@@ -12,9 +12,6 @@ import Model from '../model/Model';
 
 
 function MainPage() {
-  // const location = useLocation().state
-  // console.log(location)
-
   const [selectedSensor, setsSlectedSensor] = useState('')
   const [skeletonMode, setSkeletonMode] = useState(true)
 
@@ -159,11 +156,8 @@ function MainPage() {
                 
                 </section>
               )})}
-            
             </div>
-            
           </div>
-
         </div>
 
         <Footer currentPage={'main'} />

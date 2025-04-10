@@ -9,6 +9,7 @@ import HapticPage from './page/HapticPage.jsx'
 import BodyPage from './page/BodyPage.jsx'
 import SettingPage from './page/SettingPage.jsx'
 
+
 createRoot(document.getElementById('root')).render(
   // todo StrictMode 베포시 삭제 (또는 그전에 삭제 [한번])
   // <StrictMode>
