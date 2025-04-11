@@ -36,6 +36,3 @@ udpServer.on('message', (msg) => {
 udpServer.bind(5005, () => {
   console.log('UDP 서버가 5005 포트에서 실행 중');
 });
-
-
- 

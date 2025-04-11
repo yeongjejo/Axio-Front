@@ -14,6 +14,7 @@ import Model from '../model/Model';
 function MainPage() {
   const [selectedSensor, setsSlectedSensor] = useState('')
   const [skeletonMode, setSkeletonMode] = useState(true)
+  const [isHover, setIsHover] = useState(false);
 
   const sensorData = [
     new SensorData('hips', "1.2.0", "IMU", "Worn", "Calibrated", 36.5, 120),
@@ -120,30 +121,40 @@ function MainPage() {
         <Header />
         <div className="main">
           <div className='three'>
-            <div className='three-postion'>
+            <div className='three-postion'
+              onMouseEnter={() => setIsHover(true)}
+              onMouseLeave={() => setIsHover(false)}
+            >
               {/* <Model sensorID={selectedSensor} model={skeletonMode} /> */}
               <Model sensorID={selectedSensor} model={skeletonMode} />
 
-
-              {skeletonMode ? (
-                <div className="select-mixamo-overlay" onClick={() => {setSkeletonMode(false);}}>
-                  <div className="select-mixamo">
-                    <div className="radio-mixamo"></div>
+              <div className={`overlay-container ${isHover ? 'show' : 'hide'}`}>
+                {skeletonMode ? (
+                  <div className="select-mixamo-overlay" onClick={() => setSkeletonMode(false)}>
+                    <div className="select-mixamo">
+                      <div className="radio-mixamo"></div>
+                    </div>
                   </div>
-                </div>
                 ) : (
-                <div className="select-skeleton-overlay" onClick={() => {setSkeletonMode(true);}}>
-                  <div className="select-skeleton">
-                    <div className="radio-skeleton"></div>
+                  <div className="select-skeleton-overlay" onClick={() => setSkeletonMode(true)}>
+                    <div className="select-skeleton">
+                      <div className="radio-skeleton"></div>
+                    </div>
                   </div>
+                )}
+                <div className="toggle-btn-area">
+                  <div
+                    className={`toggle-btn ${skeletonMode ? "active" : ""}`}
+                    onClick={() => setSkeletonMode(true)}
+                  />
+                  <div
+                    className={`toggle-btn ${!skeletonMode ? "active" : ""}`}
+                    onClick={() => setSkeletonMode(false)}
+                  />
                 </div>
-              )}
-              
-              <div className='toggle-btn-area' >
-                <div className={`toggle-btn ${skeletonMode ? "active" : ""}`} onClick={() => {setSkeletonMode(true);}}/>
-                <div className={`toggle-btn ${!skeletonMode ? "active" : ""}`} onClick={() => {setSkeletonMode(false);}}/>
               </div>
- 
+
+
             </div>
           </div>
           <div className='sensor-list'>
